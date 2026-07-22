@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peak Smp — Gaming and Hangout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush:#FFF7FA;
+    --petal:#FFE1EC;
+    --pink:#FF6FA5;
+    --hotpink:#F43F7F;
+    --rose:#C2436F;
+    --ink:#3D2230;
+    --white:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Outfit',sans-serif;
+    background:var(--blush);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif}
+
+  /* ---------- pixel-corner card signature ---------- */
+  .pixel{
+    background:var(--white);
+    position:relative;
+    box-shadow:
+      0 -6px 0 0 var(--white),
+      0 6px 0 0 var(--white),
+      -6px 0 0 0 var(--white),
+      6px 0 0 0 var(--white),
+      0 12px 24px rgba(244,63,127,.12);
+  }
+  .pixel.pink-fill{
+    background:var(--petal);
+    box-shadow:
+      0 -6px 0 0 var(--petal),
+      0 6px 0 0 var(--petal),
+      -6px 0 0 0 var(--petal),
+      6px 0 0 0 var(--petal);
+  }
+
+  /* ---------- petals ---------- */
+  .petal-field{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .petal-field span{
+    position:absolute;top:-4vh;
+    width:14px;height:14px;
+    background:var(--petal);
+    border-radius:70% 0 70% 0;
+    opacity:.7;
+    animation:fall linear infinite;
+  }
+  @keyframes fall{
+    to{transform:translateY(110vh) rotate(540deg)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .petal-field span{animation:none;display:none}
+  }
+
+  main{position:relative;z-index:1}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    text-align:center;
+    padding:48px 20px 64px;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 0%, var(--petal) 0%, transparent 70%),
+      var(--blush);
+  }
+  .hero img.logo{
+    width:180px;height:180px;
+    border-radius:32px;
+    box-shadow:0 16px 40px rgba(244,63,127,.25);
+    margin-bottom:28px;
+  }
+  .hero h1{
+    font-size:clamp(3rem,9vw,6.5rem);
+    font-weight:900;
+    letter-spacing:-.02em;
+    line-height:1;
+  }
+  .hero h1 .tm{font-size:.35em;vertical-align:super}
+  .hero .tag{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:clamp(1.1rem,3vw,1.6rem);
+    color:var(--rose);
+    margin-top:10px;
+  }
+  .hero .ip{
+    margin-top:36px;
+    display:inline-block;
+    padding:16px 34px;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:.04em;
+    color:var(--white);
+    background:var(--hotpink);
+    box-shadow:
+      0 -6px 0 0 var(--hotpink),
+      0 6px 0 0 var(--hotpink),
+      -6px 0 0 0 var(--hotpink),
+      6px 0 0 0 var(--hotpink),
+      0 14px 28px rgba(244,63,127,.35);
+    cursor:pointer;border:none;
+    transition:transform .15s ease;
+  }
+  .hero .ip:hover{transform:translateY(-3px)}
+  .hero .ip small{display:block;font-weight:400;font-size:.72rem;opacity:.85;letter-spacing:.12em;text-transform:uppercase}
+  .badges{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .badge{
+    padding:8px 18px;
+    background:var(--white);
+    color:var(--rose);
+    font-weight:600;font-size:.9rem;
+    box-shadow:
+      0 -4px 0 0 var(--white),0 4px 0 0 var(--white),
+      -4px 0 0 0 var(--white),4px 0 0 0 var(--white);
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:88px 20px;max-width:1080px;margin:0 auto}
+  .eyebrow{
+    display:block;
+    font-size:.8rem;font-weight:700;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--pink);
+    margin-bottom:10px;
+  }
+  section h2{
+    font-size:clamp(2rem,5vw,3.2rem);
+    font-weight:900;
+    margin-bottom:18px;
+  }
+  section p.lead{font-size:1.15rem;line-height:1.7;max-width:640px;font-weight:300}
+
+  /* ---------- features ---------- */
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:36px;margin-top:44px}
+  .feature{padding:34px 30px}
+  .feature .icon{
+    width:46px;height:46px;
+    background:var(--petal);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;
+    margin-bottom:18px;
+    box-shadow:
+      0 -4px 0 0 var(--petal),0 4px 0 0 var(--petal),
+      -4px 0 0 0 var(--petal),4px 0 0 0 var(--petal);
+  }
+  .feature h3{font-size:1.35rem;margin-bottom:10px}
+  .feature p{line-height:1.65;font-weight:300}
+  .feature strong{color:var(--hotpink);font-weight:600}
+
+  /* ---------- team ---------- */
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:36px;margin-top:44px}
+  .member{padding:30px 24px;text-align:center}
+  .member img{
+    width:96px;height:96px;
+    image-rendering:pixelated;
+    margin-bottom:16px;
+    box-shadow:
+      0 -5px 0 0 var(--petal),0 5px 0 0 var(--petal),
+      -5px 0 0 0 var(--petal),5px 0 0 0 var(--petal);
+  }
+  .member h3{font-size:1.2rem}
+  .member .role{
+    display:inline-block;margin-top:8px;
+    padding:5px 14px;
+    background:var(--petal);color:var(--rose);
+    font-size:.8rem;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;
+  }
+
+  /* ---------- plugins ---------- */
+  .plugin-cloud{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+  .plugin{
+    padding:10px 18px;
+    background:var(--white);
+    font-weight:500;font-size:.95rem;
+    color:var(--ink);
+    box-shadow:
+      0 -4px 0 0 var(--white),0 4px 0 0 var(--white),
+      -4px 0 0 0 var(--white),4px 0 0 0 var(--white),
+      0 6px 14px rgba(244,63,127,.08);
+    transition:transform .12s ease;
+  }
+  .plugin:hover{transform:translateY(-2px);color:var(--hotpink)}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:40px;
+    padding:56px 20px 40px;
+    text-align:center;
+    background:linear-gradient(180deg,transparent,var(--petal));
+  }
+  footer .mint{font-size:.95rem;color:var(--rose);font-weight:500;margin-bottom:26px}
+  .tm-btn{
+    font-family:'Fraunces',serif;
+    font-weight:900;
+    font-size:1.3rem;
+    width:56px;height:56px;
+    border:none;cursor:pointer;
+    background:var(--white);color:var(--hotpink);
+    box-shadow:
+      0 -5px 0 0 var(--white),0 5px 0 0 var(--white),
+      -5px 0 0 0 var(--white),5px 0 0 0 var(--white),
+      0 10px 22px rgba(244,63,127,.25);
+    transition:transform .15s ease;
+  }
+  .tm-btn:hover{transform:scale(1.08) rotate(-4deg)}
+  .tm-box{
+    display:none;
+    margin:22px auto 0;
+    max-width:320px;
+    padding:22px 28px;
+    background:var(--white);
+    font-family:'Fraunces',serif;
+    font-weight:700;font-size:1.25rem;
+    color:var(--rose);
+    box-shadow:
+      0 -6px 0 0 var(--white),0 6px 0 0 var(--white),
+      -6px 0 0 0 var(--white),6px 0 0 0 var(--white),
+      0 14px 30px rgba(244,63,127,.25);
+  }
+  .tm-box.show{display:block;animation:pop .25s ease}
+  @keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+
+  :focus-visible{outline:3px solid var(--hotpink);outline-offset:4px}
+</style>
+</head>
+<body>
+
+<div class="petal-field" aria-hidden="true"></div>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <!-- LOGO: replace src with your logo image link -->
+    <img class="logo" src="https://images-ext-1.discordapp.net/external/c4paXIMsItfrJg8rkLyMyjz173wNlWqlIU81NWLsZmY/%3Fsize%3D1024/https/cdn.discordapp.com/icons/1518659433587277906/f980d1c7d56d356250fb6d75e5ee7ef7.webp?format=webp" alt="Peak Smp logo">
+    <h1>Peak<span class="tm">™</span></h1>
+    <p class="tag">Gaming and hangout</p>
+
+    <button class="ip" onclick="navigator.clipboard&&navigator.clipboard.writeText('play.peaksmp.net');this.querySelector('small').textContent='copied!'">
+      peaksmp.playit.pub
+      <small>click to copy</small>
+    </button>
+
+    <div class="badges">
+      <span class="badge">Version 26.1.2</span>
+      <span class="badge">Java Edition</span>
+      <span class="badge">Eaglercraft</span>
+    </div>
+  </header>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features">
+    <span class="eyebrow">What we're about</span>
+    <h2>Survival
+    </h2>
+    <p class="lead">Peak Smp is a survival server built around hanging out, building together, and earning everything with in-game effort — never your wallet.</p>
+
+    <div class="features">
+      <div class="feature pixel">
+        <div class="icon">🗝️</div>
+        <h3>Dungeons &amp; Crate Keys</h3>
+        <p>Run our dungeons to earn <strong>crate keys</strong> and unlock rewards. Skill in, loot out.</p>
+      </div>
+      <div class="feature pixel">
+        <div class="icon">🏅</div>
+        <h3>Buyable Ranks</h3>
+        <p>Ranks are bought with <strong>in-game money</strong> you earn by playing — grind, trade, and climb.</p>
+      </div>
+      <div class="feature pixel">
+        <div class="icon">💗</div>
+        <h3>Never Real Money</h3>
+        <p>The big one: we <strong>never charge real money</strong>. Everything on Peak is earned in-game, for everyone, always.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEAM ============ -->
+  <section id="team">
+    <span class="eyebrow">The people behind Peak</span>
+    <h2>Meet the team</h2>
+
+    <div class="team-grid">
+      <!-- Replace each img src with your image links -->
+      <div class="member pixel">
+        <img src="https://cdn.discordapp.com/avatars/1191204586531328062/800f2f6fd390114d438081acb6e1f014.webp?size=1024" alt="ghostface_yn">
+        <h3>ghostface_yn</h3>
+        <span class="role">Owner</span>
+      </div>
+      <div class="member pixel">
+        <img src="https://cdn.discordapp.com/avatars/852690790399344640/e09fc1af3b7cb6ffba8dc85050461b33.webp?size=1024" alt="Rudo_">
+        <h3>Rudo_</h3>
+        <span class="role">Dev &amp; Second Owner</span>
+      </div>
+      <div class="member pixel">
+        <img src="https://cdn.discordapp.com/avatars/1281069580466389036/8a16ee1bcc1e1d05ad6be741a71916eb.webp?size=1024" alt="Nerf">
+        <h3>Nerf</h3>
+        <span class="role">Co-Owner</span>
+      </div>
+      <div class="member pixel">
+        <img src="https://cdn.discordapp.com/avatars/1175382403448053780/01c59addba473f0cfc5906dbc0a70f63.webp?size=1024" alt="Elizabeth_Crush">
+        <h3>Elizabeth_Crush</h3>
+        <span class="role">Helper</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLUGINS ============ -->
+  <section id="plugins">
+    <span class="eyebrow">Under the hood</span>
+    <h2>Powered by</h2>
+    <p class="lead">The plugins that keep Peak running smooth.</p>
+
+    <div class="plugin-cloud">
+      <span class="plugin">AxTrade</span>
+      <span class="plugin">CombatLog</span>
+      <span class="plugin">CrazyAuctions</span>
+      <span class="plugin">DecentHolograms</span>
+      <span class="plugin">DiscordBridge</span>
+      <span class="plugin">DKNPCs</span>
+      <span class="plugin">Essentials</span>
+      <span class="plugin">EssentialsChat</span>
+      <span class="plugin">GriefPrevention</span>
+      <span class="plugin">ImageFrame</span>
+      <span class="plugin">ItemEdit</span>
+      <span class="plugin">ItemTag</span>
+      <span class="plugin">LuckPerms</span>
+      <span class="plugin">PhoenixCratesLite</span>
+      <span class="plugin">PlaceholderAPI</span>
+      <span class="plugin">PSGLogin</span>
+      <span class="plugin">SkinsRestorer</span>
+      <span class="plugin">Spawn</span>
+      <span class="plugin">TAB</span>
+      <span class="plugin">ViaBackwards</span>
+      <span class="plugin">ViaVersion</span>
+      <span class="plugin">voicechat</span>
+      <span class="plugin">WildRTP</span>
+      <span class="plugin">WorldEdit</span>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <p class="mint">🐧 Ran using Linux Mint by Rudo_</p>
+
+    <button class="tm-btn" onclick="document.getElementById('tmBox').classList.toggle('show')" aria-label="Show trademark">™</button>
+    <div class="tm-box" id="tmBox">Caym &amp; Rudo_™</div>
+  </footer>
+
+</main>
+
+<script>
+  // gentle falling petals
+  const field = document.querySelector('.petal-field');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('span');
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = 9 + Math.random() * 10 + 's';
+    p.style.animationDelay = -Math.random() * 18 + 's';
+    const s = 8 + Math.random() * 10;
+    p.style.width = s + 'px';
+    p.style.height = s + 'px';
+    p.style.opacity = 0.35 + Math.random() * 0.4;
+    field.appendChild(p);
+  }
+</script>
+
+</body>
+</html>
